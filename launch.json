@@ -8,7 +8,7 @@
             "skipFiles": ["<node_internals>/**"],
             "program": "${workspaceFolder}/node_modules/mocha/bin/mocha",
             "args": [
-                "${workspaceFolder}/LoginTest.js"  // Path to your test file
+                "${workspaceFolder}/3zadatak.js"
             ],
             "cwd": "${workspaceFolder}",
             "internalConsoleOptions": "openOnSessionStart"
