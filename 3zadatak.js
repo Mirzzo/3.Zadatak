@@ -133,3 +133,4 @@ it('should book an airport taxi', async function () {
         expect(isVisible).to.be.true; // Using Chai for assertion
 
     });
+});
