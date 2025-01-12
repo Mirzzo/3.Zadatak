@@ -41,8 +41,78 @@ describe("Booking.com Test", function () {
     this.afterEach(async () => {
         await driver.quit();
     });
+    it('Searching for accomodation', async () => {
+        this.timeout(60000); // Set timeout to 60 seconds
 
-it('should book an airport taxi', async function () {
+        await sleep(2000);
+
+        const locationInput = driver.wait(until.elementLocated(By.name('ss')), 50000);
+        locationInput.click();
+        locationInput.sendKeys('Tuzla');
+        await sleep(2000);
+        console.log('Location input entered successfully.');
+        await sleep(2000);
+        const locationSelect = driver.wait(until.elementLocated(By.id('autocomplete-result-0')), 50000);
+        locationSelect.click();
+        console.log('Location selected successfully.');
+        await sleep(2000);
+        const startDate = await driver.findElement(By.css('[aria-label="20 January 2025"]'));
+        const endDate = await driver.findElement(By.css('[aria-label="25 January 2025"]'));
+        startDate.click();
+        endDate.click();
+        const openOccupancyConfig = await driver.findElement(By.className('d777d2b248'));
+        openOccupancyConfig.click();
+        await sleep(2000);
+        const pathSelectorAdult = By.css('svg path[d="M20.25 11.25h-7.5v-7.5a.75.75 0 0 0-1.5 0v7.5h-7.5a.75.75 0 0 0 0 1.5h7.5v7.5a.75.75 0 0 0 1.5 0v-7.5h7.5a.75.75 0 0 0 0-1.5"]');
+        const addAdult = await driver.findElement(pathSelectorAdult);
+        addAdult.click();
+        const buttonDone = await driver.findElement(By.xpath('//span[contains(text(), "Done")]'));
+        buttonDone.click();
+
+        await sleep(2000);
+        const buttonSearch = await driver.findElement(By.xpath('//span[contains(text(), "Search")]'));
+        buttonSearch.click();
+        await sleep(3000);
+
+        // ASSERT
+        const loadedResults = await driver.findElement(By.css('h1[aria-label*="Search results updated."]')).getText();
+        expect(loadedResults).to.include("Tuzla");
+    });
+
+
+    it('Searching for attractions', async () => {
+        this.timeout(60000); // Set timeout to 60 seconds
+
+        await sleep(2000);
+
+        const attractionsLink = driver.wait(until.elementLocated(By.id('attractions')), 50000);
+        attractionsLink.click();
+        await sleep(2000);
+        const locationInput = driver.wait(until.elementLocated(By.name('query')), 50000);
+        locationInput.click();
+        locationInput.sendKeys('Banja Luka');
+        await sleep(2000);
+        const locationSelect = driver.wait(until.elementLocated(By.id('autocomplete-result-0')), 50000);
+        locationSelect.click();
+        console.log('Location selected successfully.');
+        await sleep(2000);
+        const datePicker = driver.wait(until.elementLocated(By.css('button[aria-label="Select your dates"]')), 50000);
+        datePicker.click();
+        await sleep(2000);
+        const startDate = await driver.findElement(By.css('[aria-label="20 January 2025"]'));
+        const endDate = await driver.findElement(By.css('[aria-label="25 January 2025"]'));
+        startDate.click();
+        endDate.click();
+        await sleep(2000);
+        const buttonSearch = await driver.findElement(By.xpath('//span[contains(text(), "Search")]'));
+        buttonSearch.click();
+        await sleep(5000);
+        // ASSERT
+        const loadedResults = await driver.findElement(By.className('af8fbdf136 css-1uk1gs8')).getText();
+        expect(loadedResults).to.include("Banja Luka");
+    });
+
+    it('should book an airport taxi', async function () {
 
         // Klikni na link "Airport taxis"
 
@@ -133,4 +203,153 @@ it('should book an airport taxi', async function () {
         expect(isVisible).to.be.true; // Using Chai for assertion
 
     });
+
+    it('Select accomodation', async () => {
+        this.timeout(60000); // Set timeout to 60 seconds
+
+        await sleep(2000);
+
+        const locationInput = driver.wait(until.elementLocated(By.name('ss')), 50000);
+        locationInput.click();
+        locationInput.sendKeys('Tuzla');
+        await sleep(2000);
+        console.log('Location input entered successfully.');
+        await sleep(2000);
+        const locationSelect = driver.wait(until.elementLocated(By.id('autocomplete-result-0')), 50000);
+        locationSelect.click();
+        console.log('Location selected successfully.');
+        await sleep(2000);
+        const startDate = await driver.findElement(By.css('[aria-label="20 January 2025"]'));
+        const endDate = await driver.findElement(By.css('[aria-label="25 January 2025"]'));
+        startDate.click();
+        endDate.click();
+        const openOccupancyConfig = await driver.findElement(By.className('d777d2b248'));
+        openOccupancyConfig.click();
+        await sleep(2000);
+        const pathSelectorAdult = By.css('svg path[d="M20.25 11.25h-7.5v-7.5a.75.75 0 0 0-1.5 0v7.5h-7.5a.75.75 0 0 0 0 1.5h7.5v7.5a.75.75 0 0 0 1.5 0v-7.5h7.5a.75.75 0 0 0 0-1.5"]');
+        const addAdult = await driver.findElement(pathSelectorAdult);
+        addAdult.click();
+        const buttonDone = await driver.findElement(By.xpath('//span[contains(text(), "Done")]'));
+        buttonDone.click();
+
+        await sleep(2000);
+        const buttonSearch = await driver.findElement(By.xpath('//span[contains(text(), "Search")]'));
+        buttonSearch.click();
+        await sleep(5000);
+        const firstFilter = await driver.findElement(By.xpath('//div[contains(text(), "Breakfast Included")]'));
+        firstFilter.click();
+        await sleep(5000);
+        const secondFilter = await driver.findElement(By.xpath('//div[contains(text(), "Parking")]'));
+        secondFilter.click();
+        await sleep(5000);
+        const openRatings = await driver.findElement(By.xpath('//span[contains(text(), "Sort by:")]'));
+        openRatings.click();
+        await sleep(5000);
+        const rating = await driver.findElement(By.xpath('//span[contains(text(), "Property rating (high to low)")]'));
+        rating.click();
+        await sleep(2000);
+        const originalTab = await driver.getWindowHandle();
+        const selection = await driver.findElement(By.xpath('//div[contains(text(), "Grand Hotel Tuzla")]'));
+        selection.click();
+        await sleep(2000);
+        const allTabs = await driver.getAllWindowHandles();
+        let newTab;
+        for (let handle of allTabs) {
+            if (handle !== originalTab) {
+                newTab = handle; // this is the handle for the new tab
+                break;
+            }
+        }
+
+        await driver.switchTo().window(newTab); // Switch to the new tab
+        await sleep(2000);
+        // ASSERT
+        const loadedResults = await driver.findElement(By.className('d2fee87262 pp-header__title')).getText();
+        expect(loadedResults).to.include("Grand Hotel Tuzla");
+    });
+
+    it('Looking up the reviews ', async () => {
+        this.timeout(60000); // Set timeout to 60 seconds
+
+        await sleep(2000);
+
+        const locationInput = driver.wait(until.elementLocated(By.name('ss')), 50000);
+        locationInput.click();
+        locationInput.sendKeys('Tuzla');
+        await sleep(2000);
+        console.log('Location input entered successfully.');
+        await sleep(2000);
+        const locationSelect = driver.wait(until.elementLocated(By.id('autocomplete-result-0')), 50000);
+        locationSelect.click();
+        console.log('Location selected successfully.');
+        await sleep(2000);
+        const startDate = await driver.findElement(By.css('[aria-label="20 January 2025"]'));
+        const endDate = await driver.findElement(By.css('[aria-label="25 January 2025"]'));
+        startDate.click();
+        endDate.click();
+        const openOccupancyConfig = await driver.findElement(By.className('d777d2b248'));
+        openOccupancyConfig.click();
+        await sleep(2000);
+        const pathSelectorAdult = By.css('svg path[d="M20.25 11.25h-7.5v-7.5a.75.75 0 0 0-1.5 0v7.5h-7.5a.75.75 0 0 0 0 1.5h7.5v7.5a.75.75 0 0 0 1.5 0v-7.5h7.5a.75.75 0 0 0 0-1.5"]');
+        const addAdult = await driver.findElement(pathSelectorAdult);
+        addAdult.click();
+        const buttonDone = await driver.findElement(By.xpath('//span[contains(text(), "Done")]'));
+        buttonDone.click();
+
+        await sleep(2000);
+        const buttonSearch = await driver.findElement(By.xpath('//span[contains(text(), "Search")]'));
+        buttonSearch.click();
+        await sleep(5000);
+        const firstFilter = await driver.findElement(By.xpath('//div[contains(text(), "Breakfast included")]'));
+        firstFilter.click();
+        await sleep(5000);
+        const secondFilter = await driver.findElement(By.xpath('//div[contains(text(), "Parking")]'));
+        secondFilter.click();
+        await sleep(5000);
+        const openRatings = await driver.findElement(By.xpath('//span[contains(text(), "Sort by:")]'));
+        openRatings.click();
+        await sleep(5000);
+        const rating = await driver.findElement(By.xpath('//span[contains(text(), "Property rating (high to low)")]'));
+        rating.click();
+        await sleep(2000);
+        const originalTab = await driver.getWindowHandle();
+        const selection = await driver.findElement(By.xpath('//div[contains(text(), "Grand Hotel Tuzla")]'));
+        selection.click();
+        await sleep(2000);
+        const allTabs = await driver.getAllWindowHandles();
+        let newTab;
+        for (let handle of allTabs) {
+            if (handle !== originalTab) {
+                newTab = handle; // this is the handle for the new tab
+                break;
+            }
+        }
+
+        await driver.switchTo().window(newTab); // Switch to the new tab
+        await driver.executeScript('window.scrollTo(0, 0);'); // Scroll to the top
+        await sleep(5000);
+
+        const reviews = await driver.findElement(By.xpath('//span[contains(text(), "Guest reviews")]'));
+        reviews.click();
+        await sleep(4000);
+        const filterSelection = driver.wait(until.elementLocated(By.name('languages')), 50000);
+        filterSelection.click();
+        await sleep(2000);
+        const filterEnglish = await driver.findElement(By.xpath('//option[contains(text(), "English")]'));
+        filterEnglish.click();
+        await sleep(2000);
+
+        const openSorting = await driver.findElement(By.name('reviewListSorters'));
+        openSorting.click();
+        await sleep(5000);
+        const sorting = await driver.findElement(By.xpath('//option[contains(text(), "Newest first")]'));
+        sorting.click();
+        await sleep(5000);
+        // ASSERT
+
+        const sorterElement = await driver.findElement(By.name('reviewListSorters'));
+        const sorterValue = await sorterElement.getAttribute('value');
+        expect(sorterValue).to.equal('NEWEST_FIRST');
+    });
+
 });
